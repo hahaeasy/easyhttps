@@ -8,6 +8,7 @@ import javax.net.ssl.SSLSession;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
 import java.util.Base64;
 
@@ -16,6 +17,13 @@ import java.util.Base64;
  */
 public class HttpsClient {
 
+	/**
+	 * HTTPS GET
+	 * @param urlString
+	 * @param user
+	 * @param password
+	 * @return results from GET, null: failed
+	 */
 	public static String get(String urlString, String user, String password) {
 		try {
 			String encoding = Base64.getEncoder().encodeToString((user + ":" + password).getBytes
@@ -49,6 +57,44 @@ public class HttpsClient {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	/**
+	 * HTTPS post
+	 * @param urlString
+	 * @param user
+	 * @param password
+	 * @param jsonText
+	 * @return status of http response, -1 failed
+	 */
+	public static int post(String urlString, String user, String password, String jsonText) {
+		try {
+			String encoding = Base64.getEncoder().encodeToString((user + ":" + password).getBytes
+					("UTF-8"));
+
+			URL url = new URL(urlString);
+			HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+			connection.setRequestMethod("POST");
+			connection.setRequestProperty("Accept", "application/json");
+			connection.setRequestProperty("Content-Type", "application/json");
+			connection.setRequestProperty  ("Authorization", "Basic " + encoding);
+			connection.setHostnameVerifier(new HostnameVerifier() {
+				public boolean verify(String hostname, SSLSession session)
+				{
+					return true;
+				}
+			});
+
+			connection.setDoOutput(true);
+			OutputStream out = connection.getOutputStream();
+			out.write(jsonText.getBytes("UTF-8"));
+			out.flush();
+			out.close();
+			return connection.getResponseCode();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return -1;
 	}
 
 }
