@@ -1,6 +1,7 @@
 # easyhttps
 
-  This is **_easy_** cdoe to show how to use java .net class to make HTTPS GEt/POST call.
+  This is **_easy_** code to show how to use java builtin java.net package to make HTTPS GET/POST call using
+  BASIC Authentiation.
 
 ### classes
 ```
