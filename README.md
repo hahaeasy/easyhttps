@@ -15,7 +15,7 @@ HttpsClient.class:  provides GET/POST method to access HTTPS server
 If you are getting HTTPs handshake error from JavaVM, one way to solve it is by adding certificate to JDK. From browser like firefox to export
 certificate to local directory (eg. ~/Documents), then run keytool to import certficate to your JDK.
 ```
-cd <JDK-dectory>
+cd <JDK-directory>
 keytool -importcert -file ~/Documents/<export-file-from-firefox>.crt -keystore ./jre/lib/security/cacerts -storepass changeit -alias <name of export-file-from-firefox>
 ```
 
