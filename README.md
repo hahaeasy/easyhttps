@@ -5,7 +5,7 @@
 
 ### classes
 ```
-HttpsClient:  provides GET/POST method to access HTTPS server
+HttpsClient.class:  provides GET/POST method to access HTTPS server
 ```
 ## Build
 
